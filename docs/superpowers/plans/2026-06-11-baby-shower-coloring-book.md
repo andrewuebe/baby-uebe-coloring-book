@@ -1428,7 +1428,7 @@ git commit -m "feat: atomic submit endpoint that releases the lock"
 **Files:**
 - Create: `lib/heartbeat.ts`
 
-- [ ] **Step 1: Implement**
+- [x] **Step 1: Implement**
 
 `lib/heartbeat.ts`:
 ```ts
@@ -1468,7 +1468,7 @@ export function startHeartbeat(
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add -A
