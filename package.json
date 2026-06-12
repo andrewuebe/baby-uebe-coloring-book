@@ -1,11 +1,8 @@
 {
   "name": "baby-uebe-coloring-book",
   "version": "1.0.0",
+  "private": true,
   "description": "Family and friends work together to create our baby's first coloring book!",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -16,9 +13,6 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@vercel/blob": "^2.4.0",
     "drizzle-orm": "^0.45.2",
