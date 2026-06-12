@@ -20,6 +20,7 @@ export function DrawFlow({ letter }: { letter: string }) {
   const [subject, setSubject] = useState('');
   const [history, setHistory] = useState<History>(createHistory());
   const stopHbRef = useRef<(() => void) | null>(null);
+  const acquiredFor = useRef<string | null>(null);
 
   const acquire = useCallback(async () => {
     setPhase('acquiring');
@@ -39,7 +40,11 @@ export function DrawFlow({ letter }: { letter: string }) {
     setPhase('unavailable');
   }, [letter]);
 
-  useEffect(() => { void acquire(); }, [acquire]);
+  useEffect(() => {
+    if (acquiredFor.current === letter) return;
+    acquiredFor.current = letter;
+    void acquire();
+  }, [letter, acquire]);
 
   useEffect(() => {
     if (phase !== 'drawing' || !lockToken) return;
