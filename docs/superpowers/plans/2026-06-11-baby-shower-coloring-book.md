@@ -2021,7 +2021,9 @@ git commit -m "feat: drawing canvas with pointer events and responsive toolbar l
 **Files:**
 - Create: `components/DrawFlow.tsx`, `app/draw/[letter]/page.tsx`
 
-- [ ] **Step 1: Implement DrawFlow**
+> **Flag for later (Task 17 execution):** `@vercel/blob/client.upload()` calls `/api/blob-upload` to mint a short-lived token from `BLOB_READ_WRITE_TOKEN`. Without that env var (or without a Vercel Blob store provisioned), submit will fail at the upload step. For local end-to-end testing the user needs to either provision a Vercel Blob store (`vercel blob` CLI) or stub the upload — the plan doesn't address local-dev blob storage. Address before the manual verify in Step 4 runs.
+
+- [x] **Step 1: Implement DrawFlow**
 
 `components/DrawFlow.tsx`:
 ```tsx
@@ -2182,7 +2184,7 @@ function CenterMessage({ children }: { children: React.ReactNode }) {
 }
 ```
 
-- [ ] **Step 2: Create the route**
+- [x] **Step 2: Create the route**
 
 `app/draw/[letter]/page.tsx`:
 ```tsx
@@ -2200,7 +2202,7 @@ export default async function DrawPage({ params }: { params: Promise<{ letter: s
 }
 ```
 
-- [ ] **Step 3: Create the blob upload handler**
+- [x] **Step 3: Create the blob upload handler**
 
 `app/api/blob-upload/route.ts`:
 ```ts
@@ -2229,11 +2231,11 @@ export async function POST(req: Request) {
 
 > The blob upload handler is a public route protected by the passcode middleware (middleware matcher excludes the welcome path only; everything else including `/api/blob-upload` requires the cookie).
 
-- [ ] **Step 4: Verify**
+- [ ] **Step 4: Verify** _(deferred — needs `BLOB_READ_WRITE_TOKEN` set; see flag above)_
 
 `npm run dev`, enter passcode, tap an available letter, fill the modal, scribble, hit Submit. Letter returns to home page as "done".
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
