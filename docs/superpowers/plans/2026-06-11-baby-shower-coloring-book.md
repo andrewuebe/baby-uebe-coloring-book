@@ -1871,7 +1871,7 @@ git commit -m "feat: responsive toolbar component"
 **Files:**
 - Create: `components/DrawCanvas.tsx`
 
-- [ ] **Step 1: Implement**
+- [x] **Step 1: Implement**
 
 `components/DrawCanvas.tsx`:
 ```tsx
@@ -2007,7 +2007,7 @@ export function DrawCanvas({
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add components/DrawCanvas.tsx
