@@ -1763,7 +1763,7 @@ git commit -m "feat: name + subject modal"
 **Files:**
 - Create: `components/Toolbar.tsx`
 
-- [ ] **Step 1: Implement**
+- [x] **Step 1: Implement**
 
 `components/Toolbar.tsx`:
 ```tsx
@@ -1857,7 +1857,7 @@ function Divider() {
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add components/Toolbar.tsx
