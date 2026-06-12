@@ -3,7 +3,7 @@ import { configuredPasscode, setPasscodeCookie } from '@/lib/passcode';
 
 export async function POST(req: Request) {
   const form = await req.formData();
-  const submitted = String(form.get('passcode') ?? '');
+  const submitted = String(form.get('passcode') ?? '').trim();
   if (submitted !== configuredPasscode()) {
     return NextResponse.redirect(new URL('/welcome?error=1', req.url), { status: 303 });
   }
