@@ -4,10 +4,10 @@ import type { Stroke, PenSize } from './strokes';
 // Pen widths as fractions of canvas width so strokes look identical at any resolution.
 const SIZE_MAP: Record<PenSize, number> = { thin: 0.007, medium: 0.015, thick: 0.030 };
 
-function strokeToPath(stroke: Stroke, scale: number): Path2D {
-  const inputs = stroke.points.map((p) => [p.x * scale, p.y * scale, p.pressure] as [number, number, number]);
+function strokeToPath(stroke: Stroke, scaleX: number, scaleY: number, sizeScale: number): Path2D {
+  const inputs = stroke.points.map((p) => [p.x * scaleX, p.y * scaleY, p.pressure] as [number, number, number]);
   const outline = getStroke(inputs, {
-    size: SIZE_MAP[stroke.size] * scale,
+    size: SIZE_MAP[stroke.size] * sizeScale,
     thinning: 0.55,
     smoothing: 0.6,
     streamline: 0.5,
@@ -29,12 +29,11 @@ export function renderStrokes(
   const space = opts.coordinateSpace ?? { width: 1, height: 1 };
   const scaleX = opts.width / space.width;
   const scaleY = opts.height / space.height;
-  const scale = Math.min(scaleX, scaleY);
   ctx.save();
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, opts.width, opts.height);
   for (const stroke of strokes) {
-    const path = strokeToPath(stroke, scale);
+    const path = strokeToPath(stroke, scaleX, scaleY, scaleX);
     if (stroke.isEraser) {
       ctx.globalCompositeOperation = 'destination-out';
       ctx.fillStyle = '#000000';

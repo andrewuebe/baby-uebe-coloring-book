@@ -42,10 +42,8 @@ export function DrawCanvas({
     canvas.style.height = `${rect.height}px`;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    renderStrokes(ctx, h.strokes, { width: canvas.width, height: canvas.height });
-    if (drawingRef.current) {
-      renderStrokes(ctx, [drawingRef.current], { width: canvas.width, height: canvas.height });
-    }
+    const all = drawingRef.current ? [...h.strokes, drawingRef.current] : h.strokes;
+    renderStrokes(ctx, all, { width: canvas.width, height: canvas.height });
   }
 
   function normalizedPoint(e: React.PointerEvent<HTMLCanvasElement>) {
