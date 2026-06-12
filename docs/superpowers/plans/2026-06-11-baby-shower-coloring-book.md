@@ -1678,7 +1678,7 @@ git commit -m "feat: entry lightbox with escape-to-close"
 **Files:**
 - Create: `components/NameModal.tsx`
 
-- [ ] **Step 1: Implement**
+- [x] **Step 1: Implement**
 
 `components/NameModal.tsx`:
 ```tsx
@@ -1747,12 +1747,14 @@ export function NameModal({
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add components/NameModal.tsx
 git commit -m "feat: name + subject modal"
 ```
+
+> **Note (Task 14 execution):** Apostrophe in "Who's drawing?" was escaped to `Who&apos;s` to match the repo's existing JSX-escaping convention (`app/welcome/page.tsx` uses `didn&apos;t`).
 
 ---
 
