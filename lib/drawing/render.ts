@@ -1,7 +1,8 @@
 import { getStroke } from 'perfect-freehand';
 import type { Stroke, PenSize } from './strokes';
 
-const SIZE_MAP: Record<PenSize, number> = { thin: 4, medium: 9, thick: 18 };
+// Pen widths as fractions of canvas width so strokes look identical at any resolution.
+const SIZE_MAP: Record<PenSize, number> = { thin: 0.007, medium: 0.015, thick: 0.030 };
 
 function strokeToPath(stroke: Stroke, scale: number): Path2D {
   const inputs = stroke.points.map((p) => [p.x * scale, p.y * scale, p.pressure] as [number, number, number]);
