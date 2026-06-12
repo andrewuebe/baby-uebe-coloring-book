@@ -1266,7 +1266,9 @@ git commit -m "feat: heartbeat, patch, and cancel endpoints for letter locks"
 **Files:**
 - Create: `app/api/entries/route.ts`, `tests/api/entries.test.ts`
 
-- [ ] **Step 1: Write the failing test**
+> **Note (Task 10 execution):** The implementation was reordered to check `entries` before the lock so that a submit against a letter that's already done returns `409 done` (matching the third test's intent) instead of `410 lock_lost` from the lock check failing first. This parallels `/api/locks` which already checks done before in_use. The `try/catch` around the insert remains as a safety net for the race where another submitter wins between the entries check and the insert.
+
+- [x] **Step 1: Write the failing test**
 
 `tests/api/entries.test.ts`:
 ```ts
@@ -1334,7 +1336,7 @@ runIf('POST /api/entries', () => {
 });
 ```
 
-- [ ] **Step 2: Implement the route**
+- [x] **Step 2: Implement the route**
 
 `app/api/entries/route.ts`:
 ```ts
@@ -1407,12 +1409,12 @@ export async function POST(req: Request) {
 }
 ```
 
-- [ ] **Step 3: Run tests**
+- [x] **Step 3: Run tests**
 
 Run: `RUN_DB_TESTS=1 npx vitest run --reporter=verbose tests/api/entries.test.ts`
-Expected: PASS.
+Expected: PASS. (Verified: 3/3 passing after the entries-first reorder noted above.)
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add -A
