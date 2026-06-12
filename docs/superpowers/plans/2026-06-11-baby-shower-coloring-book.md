@@ -1610,7 +1610,7 @@ git commit -m "feat: alphabet grid home page with SWR polling"
 **Files:**
 - Create: `components/EntryLightbox.tsx`
 
-- [ ] **Step 1: Implement**
+- [x] **Step 1: Implement**
 
 `components/EntryLightbox.tsx`:
 ```tsx
@@ -1662,12 +1662,14 @@ export function EntryLightbox({
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add -A
 git commit -m "feat: entry lightbox with escape-to-close"
 ```
+
+> **Note (Task 13 execution):** `npm run build` was run after creating `EntryLightbox.tsx` and now succeeds — this also satisfies the deferred Step 4 verify from Task 12 (home page compiles). Manual browser verify with a populated DB still pending the user's local Postgres.
 
 ---
 
