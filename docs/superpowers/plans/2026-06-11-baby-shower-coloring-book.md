@@ -1,6 +1,6 @@
 # Baby Uebe Coloring Book Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking. Check the Tasks and Steps within Tasks as complete as you finish them.
 
 **Goal:** Build a single-event web app that lets baby shower guests collaboratively create an A–Z coloring book on an iPad and their phones, ready for the party on 2026-06-20.
 
@@ -42,7 +42,7 @@
 - Create: `package.json`, `tsconfig.json`, `next.config.ts`, `tailwind.config.ts`, `postcss.config.mjs`, `app/layout.tsx`, `app/globals.css`, `app/page.tsx`, `vitest.config.ts`, `tests/smoke.test.ts`
 - Modify: `.gitignore` (add `.next/` is already present)
 
-- [ ] **Step 1: Initialize npm and install runtime deps**
+- [x] **Step 1: Initialize npm and install runtime deps**
 
 Run:
 ```bash
@@ -55,7 +55,7 @@ npm install --save-dev vitest @vitest/ui jsdom @testing-library/react @testing-l
 npm install --save-dev drizzle-kit @testcontainers/postgresql
 ```
 
-- [ ] **Step 2: Create `tsconfig.json`**
+- [x] **Step 2: Create `tsconfig.json`**
 
 ```json
 {
@@ -81,7 +81,7 @@ npm install --save-dev drizzle-kit @testcontainers/postgresql
 }
 ```
 
-- [ ] **Step 3: Create `next.config.ts`**
+- [x] **Step 3: Create `next.config.ts`**
 
 ```ts
 import type { NextConfig } from 'next';
@@ -89,7 +89,7 @@ const nextConfig: NextConfig = { reactStrictMode: true };
 export default nextConfig;
 ```
 
-- [ ] **Step 4: Configure Tailwind**
+- [x] **Step 4: Configure Tailwind**
 
 `tailwind.config.ts`:
 ```ts
@@ -119,7 +119,7 @@ export default { plugins: { tailwindcss: {}, autoprefixer: {} } };
 body { background: #fdfaf3; color: #2a2a2a; }
 ```
 
-- [ ] **Step 5: Create root layout and placeholder page**
+- [x] **Step 5: Create root layout and placeholder page**
 
 `app/layout.tsx`:
 ```tsx
@@ -147,7 +147,7 @@ export default function Home() {
 }
 ```
 
-- [ ] **Step 6: Configure Vitest**
+- [x] **Step 6: Configure Vitest**
 
 `vitest.config.ts`:
 ```ts
@@ -179,7 +179,7 @@ describe('toolchain smoke', () => {
 });
 ```
 
-- [ ] **Step 7: Add scripts to `package.json`**
+- [x] **Step 7: Add scripts to `package.json`**
 
 Add the `"scripts"` block:
 ```json
@@ -195,7 +195,7 @@ Add the `"scripts"` block:
 }
 ```
 
-- [ ] **Step 8: Verify build + smoke test**
+- [x] **Step 8: Verify build + smoke test**
 
 Run:
 ```bash
@@ -204,7 +204,7 @@ npm run build
 ```
 Expected: smoke test passes, Next build succeeds.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add -A
@@ -218,7 +218,7 @@ git commit -m "chore: scaffold Next.js 15 app with Tailwind and Vitest"
 **Files:**
 - Create: `lib/db/schema.ts`, `lib/db/index.ts`, `drizzle.config.ts`, `drizzle/0000_init.sql` (generated)
 
-- [ ] **Step 1: Create the schema**
+- [x] **Step 1: Create the schema**
 
 `lib/db/schema.ts`:
 ```ts
@@ -247,7 +247,7 @@ export type Entry = typeof entries.$inferSelect;
 export type LetterLock = typeof letterLocks.$inferSelect;
 ```
 
-- [ ] **Step 2: Create the DB client**
+- [x] **Step 2: Create the DB client**
 
 `lib/db/index.ts`:
 ```ts
@@ -274,7 +274,7 @@ export function db() {
 export { schema };
 ```
 
-- [ ] **Step 3: Create the Drizzle config**
+- [x] **Step 3: Create the Drizzle config**
 
 `drizzle.config.ts`:
 ```ts
@@ -289,7 +289,9 @@ export default {
 } satisfies Config;
 ```
 
-- [ ] **Step 4: Generate the initial migration**
+> **Note (Task 2 execution):** `dotenv` was added as a devDependency in commit `282c469` because `drizzle-kit` runs outside Next.js and does not auto-load `.env.local`.
+
+- [x] **Step 4: Generate the initial migration**
 
 Set up a local Postgres for development (Docker or Postgres.app) and put its URL in `.env.local`:
 ```
@@ -303,7 +305,9 @@ npm run db:push
 ```
 Expected: a SQL file appears at `drizzle/0000_*.sql`, and the tables exist in the DB.
 
-- [ ] **Step 5: Commit**
+> **Note (Task 2 execution):** `db:generate` was run and produced `drizzle/0000_organic_ogun.sql` (renamed to `drizzle/0000_init.sql` in Task 7 Step 2). `db:push` was **not** run during this task because no live Postgres was available — the user needs to run it manually once they set up `.env.local` with a `DATABASE_URL`.
+
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -317,7 +321,7 @@ git commit -m "feat: drizzle schema and db client for entries and letter_locks"
 **Files:**
 - Create: `lib/passcode.ts`, `middleware.ts`, `app/welcome/page.tsx`, `app/api/welcome/route.ts`
 
-- [ ] **Step 1: Create the passcode helper**
+- [x] **Step 1: Create the passcode helper**
 
 `lib/passcode.ts`:
 ```ts
@@ -351,7 +355,7 @@ export async function setPasscodeCookie(): Promise<void> {
 export { COOKIE_NAME };
 ```
 
-- [ ] **Step 2: Add middleware**
+- [x] **Step 2: Add middleware**
 
 `middleware.ts`:
 ```ts
@@ -378,7 +382,7 @@ export function middleware(req: NextRequest) {
 export const config = { matcher: '/((?!_next|favicon.ico).*)' };
 ```
 
-- [ ] **Step 3: Welcome page**
+- [x] **Step 3: Welcome page**
 
 `app/welcome/page.tsx`:
 ```tsx
@@ -413,7 +417,7 @@ async function WelcomeForm({ searchParamsPromise }: { searchParamsPromise: Promi
 }
 ```
 
-- [ ] **Step 4: Welcome submit handler**
+- [x] **Step 4: Welcome submit handler**
 
 `app/api/welcome/route.ts`:
 ```ts
@@ -431,7 +435,9 @@ export async function POST(req: Request) {
 }
 ```
 
-- [ ] **Step 5: Set local passcode and verify**
+> **Note (Task 3 execution):** A follow-up commit (`9f2844a`) added `.trim()` to the submitted passcode (`String(form.get('passcode') ?? '').trim()`) so trailing whitespace from mobile copy-paste doesn't silently fail equality. Spec-deviating but justified by the deployment target (guests on phones pasting from text messages).
+
+- [ ] **Step 5: Set local passcode and verify** _(manual — user task: add `PARTY_PASSCODE=uebe2026` and `ADMIN_KEY=changeme` to `.env.local`, run `npm run dev`, verify gate redirect + wrong/right code paths)_
 
 Add to `.env.local`:
 ```
@@ -441,7 +447,7 @@ ADMIN_KEY=changeme
 
 Run `npm run dev`, browse to `http://localhost:3000`. Expected: redirected to `/welcome`. Submit wrong code → error. Submit right code → land on home.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add -A
@@ -455,7 +461,9 @@ git commit -m "feat: passcode middleware and welcome flow"
 **Files:**
 - Create: `lib/drawing/strokes.ts`, `tests/lib/drawing/strokes.test.ts`
 
-- [ ] **Step 1: Write the failing test**
+> **Flag for later (Task 4 execution):** `Stroke.points` is unbounded. With the 200-stroke cap and aggressive iPad scribbling (~60Hz pointer events × long strokes), the JSONB payload sent to POST `/api/entries` can plausibly exceed Vercel's ~4.5MB body limit. Address before Task 10 lands — likely options: (a) throttle/decimate pointer events in `DrawCanvas`, (b) run a stroke-simplification pass (Ramer–Douglas–Peucker) before submit, or (c) accept the risk and surface a clear error.
+
+- [x] **Step 1: Write the failing test**
 
 `tests/lib/drawing/strokes.test.ts`:
 ```ts
@@ -516,12 +524,12 @@ describe('stroke history', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run --reporter=verbose tests/lib/drawing/strokes.test.ts`
 Expected: FAIL with module-not-found / import errors.
 
-- [ ] **Step 3: Implement strokes module**
+- [x] **Step 3: Implement strokes module**
 
 `lib/drawing/strokes.ts`:
 ```ts
@@ -570,12 +578,12 @@ export function clear(_: History): History {
 }
 ```
 
-- [ ] **Step 4: Run test to verify pass**
+- [x] **Step 4: Run test to verify pass**
 
 Run: `npx vitest run --reporter=verbose tests/lib/drawing/strokes.test.ts`
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add lib/drawing/strokes.ts tests/lib/drawing/strokes.test.ts
@@ -589,7 +597,9 @@ git commit -m "feat: stroke history with undo, redo, and 200-cap"
 **Files:**
 - Create: `lib/drawing/render.ts`
 
-- [ ] **Step 1: Implement the renderer**
+> **Flag for later (Task 5 execution):** `scale = Math.min(scaleX, scaleY)` letterboxes the stroke region into a square. With the default `coordinateSpace: {1, 1}` and a portrait canvas (e.g. 600×800 or 2550×3300), strokes only fill the top square (600×600 or 2550×2550) and the bottom band is unreachable. The spec's note about cross-size identity holds only when callers pass `coordinateSpace` matching the recording canvas's aspect ratio. Verify when `DrawCanvas` (Task 14+) wires up live drawing — likely fix is for `DrawCanvas` to always pass an explicit `coordinateSpace` equal to its own client-rect, or to switch the renderer to independent `scaleX`/`scaleY` per axis.
+
+- [x] **Step 1: Implement the renderer**
 
 `lib/drawing/render.ts`:
 ```ts
@@ -644,7 +654,7 @@ export function renderStrokes(
 
 > **Note:** Coordinates in `Stroke.points` are normalized 0–1. The renderer multiplies by `scale` so the same stroke list looks identical at 600×800 display or 2550×3300 export.
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add lib/drawing/render.ts
@@ -658,7 +668,9 @@ git commit -m "feat: render strokes with perfect-freehand and eraser compositing
 **Files:**
 - Create: `lib/drawing/export.ts`, `tests/lib/drawing/export.test.ts`
 
-- [ ] **Step 1: Add canvas dependency for tests**
+> **Note (Task 6 execution):** `tests/lib/drawing/export.test.ts` was extended with a minimal `Path2D` polyfill inside `beforeAll`. jsdom doesn't ship `Path2D` and `node-canvas` doesn't either, so `lib/drawing/render.ts` would throw at module load. The polyfill records `moveTo`/`lineTo`/`closePath` to satisfy the constructor surface; node-canvas's `ctx.fill(path)` no-ops on the unknown object, which is fine because the caption-presence assertion samples a pixel painted by `fillText`, not by stroke `fill`.
+
+- [x] **Step 1: Add canvas dependency for tests**
 
 Run:
 ```bash
@@ -667,7 +679,7 @@ npm install --save-dev canvas
 
 > `canvas` provides a node-side CanvasRenderingContext2D so the export logic can be unit-tested in jsdom.
 
-- [ ] **Step 2: Write the failing test**
+- [x] **Step 2: Write the failing test**
 
 `tests/lib/drawing/export.test.ts`:
 ```ts
@@ -715,12 +727,12 @@ describe('export', () => {
 });
 ```
 
-- [ ] **Step 3: Run test to verify it fails**
+- [x] **Step 3: Run test to verify it fails**
 
 Run: `npx vitest run --reporter=verbose tests/lib/drawing/export.test.ts`
 Expected: FAIL with missing module.
 
-- [ ] **Step 4: Implement export module**
+- [x] **Step 4: Implement export module**
 
 `lib/drawing/export.ts`:
 ```ts
@@ -770,12 +782,12 @@ export async function exportToBlob(strokes: Stroke[], caption: { letter: string;
 }
 ```
 
-- [ ] **Step 5: Run test to verify pass**
+- [x] **Step 5: Run test to verify pass**
 
 Run: `npx vitest run --reporter=verbose tests/lib/drawing/export.test.ts`
 Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add -A
@@ -791,7 +803,13 @@ git commit -m "feat: export drawing to 300dpi PNG with caption"
 
 > **Test infrastructure:** Integration tests use `@testcontainers/postgresql`. Set `RUN_DB_TESTS=1` and have Docker running to enable them. Otherwise tests skip with a warning.
 
-- [ ] **Step 1: Create letters helper**
+> **Notes (Task 7 execution):**
+> - **Migration rename done.** `drizzle/0000_organic_ogun.sql` → `drizzle/0000_init.sql`; `drizzle/meta/_journal.json` `tag` updated.
+> - **`vitest.config.ts` got `hookTimeout: 60000`** (commit `d7357a1`). The testcontainers Postgres start exceeds vitest's 10s default `beforeAll` ceiling.
+> - **`tests/db-setup.ts` `stopDb()`** now ends `globalThis.pool` (the route-side pool from `lib/db/index.ts`) before stopping the container, so test output isn't polluted by "terminating connection due to administrator command".
+> - **Flag for later:** `route.ts` line 16 uses `sql.raw(String(STALE_SECONDS))` per spec — currently safe because the constant is hardcoded, but the idiom bypasses parameter binding. If `STALE_SECONDS` ever becomes dynamic (env var, config), rewrite as `now() - interval '1 second' * ${STALE_SECONDS}` to avoid an injection footgun. This pattern repeats in Tasks 8–10; address consistently.
+
+- [x] **Step 1: Create letters helper**
 
 `lib/letters.ts`:
 ```ts
@@ -805,7 +823,7 @@ export function isLetter(value: unknown): value is string {
 }
 ```
 
-- [ ] **Step 2: Create the test setup helper**
+- [x] **Step 2: Create the test setup helper**
 
 `tests/db-setup.ts`:
 ```ts
@@ -843,7 +861,7 @@ export async function stopDb() {
 
 > **Note:** Rename the actual generated migration file from `drizzle/0000_*.sql` to `drizzle/0000_init.sql` after running `npm run db:generate` so this loader has a stable filename.
 
-- [ ] **Step 3: Write the failing test**
+- [x] **Step 3: Write the failing test**
 
 `tests/api/state.test.ts`:
 ```ts
@@ -885,7 +903,7 @@ runIf('GET /api/state', () => {
 });
 ```
 
-- [ ] **Step 4: Implement the route**
+- [x] **Step 4: Implement the route**
 
 `app/api/state/route.ts`:
 ```ts
@@ -936,12 +954,12 @@ export async function GET() {
 }
 ```
 
-- [ ] **Step 5: Run test to verify pass**
+- [x] **Step 5: Run test to verify pass**
 
 Run: `RUN_DB_TESTS=1 npx vitest run --reporter=verbose tests/api/state.test.ts`
-Expected: PASS.
+Expected: PASS.  (Verified: 2/2 passing locally after Docker Desktop started.)
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add -A
@@ -955,7 +973,7 @@ git commit -m "feat: GET /api/state returns 26-letter board with status"
 **Files:**
 - Create: `app/api/locks/route.ts`, `tests/api/locks-acquire.test.ts`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 `tests/api/locks-acquire.test.ts`:
 ```ts
@@ -1026,7 +1044,7 @@ runIf('POST /api/locks', () => {
 });
 ```
 
-- [ ] **Step 2: Implement the route**
+- [x] **Step 2: Implement the route**
 
 `app/api/locks/route.ts`:
 ```ts
@@ -1074,12 +1092,12 @@ export async function POST(req: Request) {
 }
 ```
 
-- [ ] **Step 3: Run tests**
+- [x] **Step 3: Run tests**
 
 Run: `RUN_DB_TESTS=1 npx vitest run --reporter=verbose tests/api/locks-acquire.test.ts`
-Expected: PASS.
+Expected: PASS. (Verified: 5/5 passing.)
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add -A
