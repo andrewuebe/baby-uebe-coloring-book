@@ -1483,7 +1483,9 @@ git commit -m "feat: client heartbeat manager"
 - Create: `components/AlphabetGrid.tsx`, `components/AlphabetCell.tsx`
 - Modify: `app/page.tsx`
 
-- [ ] **Step 1: Create AlphabetCell**
+> **Note (Task 12 execution):** `AlphabetGrid` imports `./EntryLightbox`, which is created in Task 13. The home page won't compile until that task lands; Step 4's manual verify is therefore deferred to after Task 13.
+
+- [x] **Step 1: Create AlphabetCell**
 
 `components/AlphabetCell.tsx`:
 ```tsx
@@ -1533,7 +1535,7 @@ export function AlphabetCell({ state, onView }: { state: LetterState; onView: (s
 }
 ```
 
-- [ ] **Step 2: Create AlphabetGrid**
+- [x] **Step 2: Create AlphabetGrid**
 
 `components/AlphabetGrid.tsx`:
 ```tsx
@@ -1566,7 +1568,7 @@ export function AlphabetGrid({ initial }: { initial: { letters: LetterState[] } 
 }
 ```
 
-- [ ] **Step 3: Update home page to load state**
+- [x] **Step 3: Update home page to load state**
 
 `app/page.tsx`:
 ```tsx
@@ -1590,11 +1592,11 @@ export default async function Home() {
 }
 ```
 
-- [ ] **Step 4: Verify**
+- [ ] **Step 4: Verify** _(deferred — depends on Task 13's `EntryLightbox`)_
 
 Run `npm run dev`, enter passcode, see 26 letters. Manually insert an entry in the DB and reload → it shows as "done".
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
