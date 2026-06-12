@@ -1112,7 +1112,7 @@ git commit -m "feat: POST /api/locks with atomic acquire and stale sweep"
 - Create: `app/api/locks/heartbeat/route.ts`, `tests/api/locks-heartbeat.test.ts`
 - Modify: `app/api/locks/route.ts` (add PATCH and DELETE)
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `tests/api/locks-heartbeat.test.ts`:
 ```ts
@@ -1178,7 +1178,7 @@ runIf('lock heartbeat / patch / delete', () => {
 });
 ```
 
-- [ ] **Step 2: Implement heartbeat route**
+- [x] **Step 2: Implement heartbeat route**
 
 `app/api/locks/heartbeat/route.ts`:
 ```ts
@@ -1211,7 +1211,7 @@ export async function POST(req: Request) {
 }
 ```
 
-- [ ] **Step 3: Add PATCH and DELETE to locks route**
+- [x] **Step 3: Add PATCH and DELETE to locks route**
 
 Append to `app/api/locks/route.ts`:
 ```ts
@@ -1247,12 +1247,12 @@ export async function DELETE(req: Request) {
 }
 ```
 
-- [ ] **Step 4: Run tests**
+- [x] **Step 4: Run tests**
 
 Run: `RUN_DB_TESTS=1 npx vitest run --reporter=verbose tests/api/locks-heartbeat.test.ts`
-Expected: PASS.
+Expected: PASS. (Verified: 4/4 passing.)
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A

@@ -37,3 +37,34 @@ export async function POST(req: Request) {
   }
   return NextResponse.json({ lock_token: rows[0].lock_token }, { status: 201 });
 }
+
+export async function PATCH(req: Request) {
+  const body = await req.json().catch(() => null);
+  const { letter, lock_token: lockToken, artist_name: artistName, subject } = body ?? {};
+  if (!isLetter(letter) || typeof lockToken !== 'string' || typeof artistName !== 'string' || typeof subject !== 'string') {
+    return NextResponse.json({ reason: 'invalid' }, { status: 400 });
+  }
+  const conn = db();
+  const result = await conn.execute(
+    sql`UPDATE ${schema.letterLocks}
+        SET artist_name = ${artistName}, subject = ${subject}
+        WHERE letter = ${letter} AND lock_token = ${lockToken}
+        RETURNING letter`,
+  );
+  const rows = (result as unknown as { rows: unknown[] }).rows;
+  if (rows.length === 0) return NextResponse.json({ reason: 'lock_lost' }, { status: 410 });
+  return NextResponse.json({ ok: true });
+}
+
+export async function DELETE(req: Request) {
+  const body = await req.json().catch(() => null);
+  const { letter, lock_token: lockToken } = body ?? {};
+  if (!isLetter(letter) || typeof lockToken !== 'string') {
+    return NextResponse.json({ reason: 'invalid' }, { status: 400 });
+  }
+  const conn = db();
+  await conn.execute(
+    sql`DELETE FROM ${schema.letterLocks} WHERE letter = ${letter} AND lock_token = ${lockToken}`,
+  );
+  return NextResponse.json({ ok: true });
+}
