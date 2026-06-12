@@ -23,6 +23,14 @@ export async function resetDb() {
 }
 
 export async function stopDb() {
+  // Close the route-side pool created by lib/db/index.ts before stopping the
+  // container, otherwise its idle connections raise "terminating connection
+  // due to administrator command" as the server shuts down.
+  const globalPool = (globalThis as { pool?: Pool }).pool;
+  if (globalPool) {
+    await globalPool.end();
+    (globalThis as { pool?: Pool }).pool = undefined;
+  }
   if (pool) await pool.end();
   if (container) await container.stop();
   pool = null;
