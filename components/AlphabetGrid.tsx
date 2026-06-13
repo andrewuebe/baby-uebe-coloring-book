@@ -16,7 +16,7 @@ export function AlphabetGrid({ initial }: { initial: { letters: LetterState[] } 
   const letters = data?.letters ?? [];
   return (
     <>
-      <div className="grid grid-cols-4 gap-3 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-7">
+      <div className="grid grid-cols-4 gap-x-3 gap-y-5 sm:grid-cols-5 sm:gap-x-4 md:grid-cols-7 md:gap-x-5 md:gap-y-7">
         {letters.map((l) => (
           <AlphabetCell key={l.letter} state={l} onView={setViewing} />
         ))}
