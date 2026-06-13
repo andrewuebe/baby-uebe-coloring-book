@@ -144,3 +144,5 @@ vite.config.ts.timestamp-*
 
 # Superpowers brainstorming session files
 .superpowers/
+.vercel
+.env*
