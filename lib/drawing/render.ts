@@ -32,15 +32,12 @@ export function renderStrokes(
   ctx.save();
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, opts.width, opts.height);
+  ctx.globalCompositeOperation = 'source-over';
   for (const stroke of strokes) {
     const path = strokeToPath(stroke, scaleX, scaleY, scaleX);
-    if (stroke.isEraser) {
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.fillStyle = '#000000';
-    } else {
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.fillStyle = stroke.color;
-    }
+    // Eraser paints opaque white instead of cutting alpha. Background is always
+    // white in this app, and PNG transparency renders as gray in many viewers.
+    ctx.fillStyle = stroke.isEraser ? '#ffffff' : stroke.color;
     ctx.fill(path);
   }
   ctx.restore();
