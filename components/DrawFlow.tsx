@@ -55,7 +55,7 @@ export function DrawFlow({ letter }: { letter: string }) {
   }, [letter, acquire]);
 
   useEffect(() => {
-    if (phase !== 'drawing' || !lockToken) return;
+    if ((phase !== 'drawing' && phase !== 'previewing') || !lockToken) return;
     const handle = startHeartbeat(letter, lockToken, (e) => {
       if (e === 'lost') setPhase('lock_lost');
     });
