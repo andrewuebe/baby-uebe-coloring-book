@@ -115,46 +115,110 @@ export function DrawFlow({ letter }: { letter: string }) {
     router.push('/');
   }
 
-  if (phase === 'acquiring') return <CenterMessage>Reserving {letter}…</CenterMessage>;
+  if (phase === 'acquiring') {
+    return (
+      <CenterMessage>
+        <div className="font-display text-[10px] uppercase tracking-eyebrow text-nibsoft">
+          One moment
+        </div>
+        <div
+          className="mt-2 font-display text-2xl text-nib"
+          style={{ fontVariationSettings: '"opsz" 60, "SOFT" 100, "wght" 500' }}
+        >
+          Reserving {letter}…
+        </div>
+      </CenterMessage>
+    );
+  }
   if (phase === 'unavailable') {
     const msg = errorReason === 'done' ? `${letter} is already finished.` : `${letter} is being drawn right now.`;
     return (
       <CenterMessage>
-        {msg}
-        <button onClick={() => router.push('/')} className="mt-4 rounded-lg bg-ink px-4 py-2 text-cream">Back</button>
+        <div
+          className="font-display text-2xl text-nib"
+          style={{ fontVariationSettings: '"opsz" 60, "SOFT" 100, "wght" 500' }}
+        >
+          {msg}
+        </div>
+        <button
+          onClick={() => router.push('/')}
+          className="mt-5 rounded-[3px] bg-ink px-5 py-2.5 font-display text-[11px] uppercase tracking-eyebrow text-cream transition-opacity hover:bg-nib"
+        >
+          Back to the book
+        </button>
       </CenterMessage>
     );
   }
   if (phase === 'naming') return <NameModal letter={letter} onSubmit={handleNameSubmit} onCancel={handleCancel} />;
   return (
-    <main className="mx-auto max-w-4xl p-4">
-      <header className="mb-3 flex items-center justify-between">
-        <div>
-          <div className="text-[10px] uppercase tracking-wider text-inksoft">Drawing for Baby Uebe</div>
-          <div className="font-serif text-lg">{letter} is for {subject} · by {artist}</div>
-        </div>
-        <div className="flex gap-2">
-          <button onClick={handleCancel} className="rounded-lg px-3 py-2 text-inksoft">Cancel</button>
-          <button
-            onClick={handleSubmit}
-            disabled={history.strokes.length === 0 || phase === 'submitting'}
-            className="rounded-lg bg-ink px-4 py-2 font-semibold text-cream disabled:opacity-50"
-          >
-            {phase === 'submitting' ? 'Saving…' : 'Submit'}
-          </button>
-        </div>
-      </header>
-      {phase === 'lock_lost' && (
-        <div className="mb-3 rounded-lg bg-amber-100 p-3 text-sm text-amber-900">
-          This letter was freed up. Your drawing is still here — try submitting again to claim it.
-          <button onClick={acquire} className="ml-2 underline">Retry now</button>
-        </div>
-      )}
-      <DrawCanvas onHistoryChange={setHistory} />
+    <main className="relative isolate min-h-screen overflow-hidden bg-paper-sheet">
+      <div aria-hidden="true" className="grain pointer-events-none absolute inset-0" />
+
+      <div className="relative mx-auto max-w-5xl px-4 pb-12 pt-6 md:px-8 md:pt-10">
+        <header className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between md:mb-6">
+          <div className="min-w-0">
+            <div className="font-display text-[10px] uppercase tracking-eyebrow text-nibsoft">
+              Drawing for Baby Uebe
+            </div>
+            <h1
+              className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1 font-display leading-none text-nib"
+              style={{ fontVariationSettings: '"opsz" 60, "SOFT" 100, "wght" 500' }}
+            >
+              <span
+                className="text-coral"
+                style={{
+                  fontSize: 'clamp(2.4rem, 7vw, 3rem)',
+                  fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 1, "wght" 500',
+                  lineHeight: 0.85,
+                }}
+              >
+                {letter}
+              </span>
+              <span className="text-xl md:text-2xl">is for</span>
+              <span className="crayon-underline text-xl md:text-2xl">{subject}</span>
+            </h1>
+            <div className="mt-1 font-hand text-base text-nibsoft">— by {artist}</div>
+          </div>
+          <div className="flex shrink-0 items-center gap-1 self-end sm:self-auto">
+            <button
+              onClick={handleCancel}
+              className="rounded-[3px] px-4 py-2 font-display text-[11px] uppercase tracking-eyebrow text-nibsoft transition-colors hover:text-nib"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSubmit}
+              disabled={history.strokes.length === 0 || phase === 'submitting'}
+              className="rounded-[3px] bg-ink px-5 py-2.5 font-display text-[11px] uppercase tracking-eyebrow text-cream transition-opacity hover:bg-nib disabled:opacity-40"
+            >
+              {phase === 'submitting' ? 'Saving…' : 'Submit page'}
+            </button>
+          </div>
+        </header>
+
+        {phase === 'lock_lost' && (
+          <div className="mb-4 rounded-[3px] border border-coral/40 bg-coral/10 px-4 py-3 font-body text-sm text-nib">
+            This letter got freed up. Your drawing is still here — try submitting again to claim it.
+            <button
+              onClick={acquire}
+              className="ml-2 font-display text-[11px] uppercase tracking-eyebrow text-coral underline"
+            >
+              Retry now
+            </button>
+          </div>
+        )}
+
+        <DrawCanvas onHistoryChange={setHistory} />
+      </div>
     </main>
   );
 }
 
 function CenterMessage({ children }: { children: React.ReactNode }) {
-  return <main className="flex min-h-screen items-center justify-center p-6 text-center">{children}</main>;
+  return (
+    <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden bg-paper-sheet p-6 text-center">
+      <div aria-hidden="true" className="grain pointer-events-none absolute inset-0" />
+      <div className="relative flex flex-col items-center">{children}</div>
+    </main>
+  );
 }

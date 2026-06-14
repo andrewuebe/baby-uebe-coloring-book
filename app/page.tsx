@@ -34,9 +34,9 @@ export default async function Home() {
           <VolumeStamp />
           <div className="text-right">
             <div className="font-display text-[10px] uppercase tracking-eyebrow text-nibsoft">
-              Volume I · MMXXVI
+              San Diego · June 2026
             </div>
-            <div className="mt-1 font-hand text-base text-nib/80">a baby-shower keepsake</div>
+            <div className="mt-1 font-hand text-base text-nib/80">at Uncle James & Auntie Dani’s house!</div>
           </div>
         </div>
 
@@ -144,15 +144,8 @@ export default async function Home() {
         <footer className="mt-20 flex flex-col items-center gap-3 text-center">
           <DividerMark className="text-nibfaint" />
           <p className="font-hand text-lg text-nibsoft">
-            made with crayons & love by the people who love them already
+            made with crayons & love by the people who love her already
           </p>
-          <Link
-            href="/welcome"
-            className="mt-3 inline-flex items-center gap-2 rounded-full border border-nib bg-paper px-5 py-2 font-display text-sm uppercase tracking-eyebrow text-nib transition-transform hover:-translate-y-0.5"
-          >
-            New here? Start at the welcome page
-            <span aria-hidden>→</span>
-          </Link>
         </footer>
       </div>
     </main>
@@ -190,13 +183,13 @@ function VolumeStamp() {
         className="font-display text-[9px] uppercase tracking-eyebrow"
         style={{ fontVariationSettings: '"wght" 700' }}
       >
-        Vol. I
+        One of a kind
       </span>
       <span
         className="font-display text-[8px] uppercase tracking-eyebrow opacity-80"
         style={{ fontVariationSettings: '"wght" 500' }}
       >
-        First edition
+        For Baby Uebe
       </span>
     </div>
   );

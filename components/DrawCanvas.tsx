@@ -102,7 +102,7 @@ export function DrawCanvas({
 
   return (
     <div className="flex flex-col gap-3 md:flex-row">
-      <div ref={containerRef} className="aspect-[8.5/11] w-full overflow-hidden rounded-lg bg-white shadow md:flex-1">
+      <div ref={containerRef} className="aspect-[8.5/11] w-full overflow-hidden rounded-[6px] bg-white ink-shadow ring-1 ring-nib/10 md:flex-1">
         <canvas
           ref={canvasRef}
           className="block h-full w-full touch-none"

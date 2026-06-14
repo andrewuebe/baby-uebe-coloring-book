@@ -49,10 +49,10 @@ function SizeButton({ size, current, onClick }: { size: PenSize; current: PenSiz
   return (
     <button
       onClick={onClick}
-      className={`grid h-10 w-10 place-items-center rounded-lg border ${active ? 'border-ink bg-ink/10' : 'border-stone-300 bg-white'}`}
+      className={`grid h-10 w-10 place-items-center rounded-[3px] border transition-colors ${active ? 'border-nib bg-nib/10' : 'border-nib/15 bg-cream hover:border-nib/30'}`}
       aria-label={`${size} pen`}
     >
-      <span className="rounded-full bg-ink" style={{ width: px, height: px }} />
+      <span className="rounded-full bg-nib" style={{ width: px, height: px }} />
     </button>
   );
 }
@@ -62,7 +62,7 @@ function ColorSwatch({ hex, current, onClick }: { hex: StrokeColor; current: Str
   return (
     <button
       onClick={onClick}
-      className={`h-10 w-10 rounded-lg border ${active ? 'border-ink' : 'border-stone-300'}`}
+      className={`h-10 w-10 rounded-[3px] border transition-colors ${active ? 'border-nib' : 'border-nib/15 hover:border-nib/30'}`}
       style={{ background: hex }}
       aria-label={`color ${hex}`}
     />
@@ -77,7 +77,7 @@ function ToolButton({
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
-      className={`grid h-10 w-10 place-items-center rounded-lg border text-lg ${active ? 'border-ink bg-ink/10' : 'border-stone-300 bg-white'} ${disabled ? 'opacity-40' : ''}`}
+      className={`grid h-10 w-10 place-items-center rounded-[3px] border text-lg text-nib transition-colors ${active ? 'border-nib bg-nib/10' : 'border-nib/15 bg-cream hover:border-nib/30'} ${disabled ? 'opacity-40' : ''}`}
     >
       {children}
     </button>
@@ -85,5 +85,5 @@ function ToolButton({
 }
 
 function Divider() {
-  return <div className="hidden h-px w-full bg-stone-300 md:block" aria-hidden="true" />;
+  return <div className="hidden h-px w-full bg-nib/15 md:block" aria-hidden="true" />;
 }
