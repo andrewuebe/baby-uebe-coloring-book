@@ -42,10 +42,6 @@ export default async function Home() {
 
         {/* Hero */}
         <header className="relative mb-14 text-center md:mb-20">
-          <div className="mb-3 font-display text-[11px] uppercase tracking-eyebrow text-nibsoft">
-            Twenty-six letters · One little book
-          </div>
-
           <h1 className="animate-rise-in">
             <span className="flex items-baseline justify-center gap-3 leading-none md:gap-6">
               <span className="font-body italic text-nibsoft text-xl md:text-3xl">from</span>
