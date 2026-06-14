@@ -89,3 +89,14 @@ export function applyTransform(strokes: Stroke[], t: AutoFitTransform): Stroke[]
     })),
   }));
 }
+
+const IDENTITY_SCALE_TOLERANCE = 0.05;
+const IDENTITY_TRANSLATE_TOLERANCE = 0.02;
+
+export function isIdentityTransform(t: AutoFitTransform): boolean {
+  return (
+    Math.abs(t.scale - 1) < IDENTITY_SCALE_TOLERANCE &&
+    Math.abs(t.dx) < IDENTITY_TRANSLATE_TOLERANCE &&
+    Math.abs(t.dy) < IDENTITY_TRANSLATE_TOLERANCE
+  );
+}
