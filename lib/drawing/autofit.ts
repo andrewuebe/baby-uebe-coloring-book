@@ -78,3 +78,14 @@ export function computeAutoFit(strokes: Stroke[]): AutoFitTransform {
 
   return { scale, dx, dy };
 }
+
+export function applyTransform(strokes: Stroke[], t: AutoFitTransform): Stroke[] {
+  return strokes.map((s) => ({
+    ...s,
+    points: s.points.map((p) => ({
+      x: p.x * t.scale + t.dx,
+      y: p.y * t.scale + t.dy,
+      pressure: p.pressure,
+    })),
+  }));
+}

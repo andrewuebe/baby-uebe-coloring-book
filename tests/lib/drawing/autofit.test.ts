@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { computeAutoFit } from '@/lib/drawing/autofit';
+import { computeAutoFit, applyTransform } from '@/lib/drawing/autofit';
 import type { Stroke } from '@/lib/drawing/strokes';
 
 const mkStroke = (
@@ -123,5 +123,48 @@ describe('computeAutoFit', () => {
     ]);
     expect(t.scale).toBeLessThan(4.25);
     expect(t.scale).toBeGreaterThan(3.0);
+  });
+});
+
+describe('applyTransform', () => {
+  it('applies scale and translation to every point', () => {
+    const s = mkStroke('s', [[0.0, 0.0], [0.5, 0.5], [1.0, 1.0]]);
+    const out = applyTransform([s], { scale: 2, dx: 0.1, dy: -0.2 });
+    expect(out).toHaveLength(1);
+    expect(out[0].points).toEqual([
+      { x: 0.1, y: -0.2, pressure: 0.5 },
+      { x: 1.1, y: 0.8, pressure: 0.5 },
+      { x: 2.1, y: 1.8, pressure: 0.5 },
+    ]);
+  });
+
+  it('preserves stroke metadata (id, color, size, isEraser)', () => {
+    const s = mkStroke('keep', [[0, 0], [1, 1]], { size: 'thick' });
+    const out = applyTransform([s], { scale: 1, dx: 0, dy: 0 });
+    expect(out[0].id).toBe('keep');
+    expect(out[0].size).toBe('thick');
+    expect(out[0].isEraser).toBe(false);
+    expect(out[0].color).toBe('#000000');
+  });
+
+  it('preserves pressure values', () => {
+    const stroke: Stroke = {
+      id: 'p',
+      color: '#000000',
+      size: 'medium',
+      isEraser: false,
+      points: [{ x: 0.2, y: 0.3, pressure: 0.7 }],
+    };
+    const out = applyTransform([stroke], { scale: 1.5, dx: 0, dy: 0 });
+    expect(out[0].points[0].pressure).toBe(0.7);
+  });
+
+  it('returns a new array (does not mutate input)', () => {
+    const s = mkStroke('s', [[0, 0]]);
+    const input = [s];
+    const out = applyTransform(input, { scale: 2, dx: 0, dy: 0 });
+    expect(out).not.toBe(input);
+    expect(out[0]).not.toBe(s);
+    expect(s.points[0]).toEqual({ x: 0, y: 0, pressure: 0.5 });
   });
 });
