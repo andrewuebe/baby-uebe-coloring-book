@@ -164,6 +164,17 @@ MVP scope. Lean and pragmatic.
 - [ ] iPad portrait shows bottom toolbar; iPad landscape shows left-rail toolbar.
 - [ ] `/admin?key=…` shows entries; delete one and it returns to available.
 - [ ] `/api/admin/zip` downloads a ZIP containing all submitted PNGs at 300 DPI.
+- [ ] Draw a small doodle in one corner → preview shows it centered and enlarged.
+- [ ] Draw a huge figure that touches the edges → preview shows it shrunk to fit.
+- [ ] Draw something then tap a stray dot in a corner → bbox ignores the dot.
+- [ ] Draw something already well-centered at a reasonable size → preview is skipped.
+- [ ] Tap "Use my original" in the preview → submitted PNG matches the raw drawing.
+- [ ] Tap "Use this" in the preview → submitted PNG shows the centered/scaled version.
+- [ ] Tap Reference on a letter with subject "Apple" → photo loads with photographer credit.
+- [ ] Tap "Show me another" → photo changes.
+- [ ] Close and reopen Reference → no extra network request (verify in DevTools Network).
+- [ ] Subject like "Xylophonic frogfish" → friendly "couldn't find" message.
+- [ ] Reference button is disabled while preview modal is open and while submitting.
 
 ### Skipped
 
@@ -177,6 +188,7 @@ MVP scope. Lean and pragmatic.
   - `BLOB_READ_WRITE_TOKEN`
   - `PARTY_PASSCODE`
   - `ADMIN_KEY`
+  - `PEXELS_API_KEY`
 - **Migrations:** Drizzle `drizzle-kit push` for first deploy, `drizzle-kit migrate` as part of the Vercel build step thereafter.
 - **Roll-back:** Vercel keeps prior deploys; one-click revert if the party-day deploy breaks.
 
@@ -188,6 +200,7 @@ MVP scope. Lean and pragmatic.
 - Admin URL bookmarked on Andrew's phone.
 - At least one real-feeling test entry submitted and visible in gallery.
 - ZIP download produces a valid archive with print-ready PNGs.
+- `PEXELS_API_KEY` configured in Vercel for the production environment.
 
 ## Visual aesthetic
 
