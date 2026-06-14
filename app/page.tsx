@@ -93,9 +93,7 @@ export default async function Home() {
             <StatDivider />
             <StatCell value={done} label="drawn" accent="text-coral" />
             <StatDivider />
-            <StatCell value={inProgress} label="in progress" accent="text-sun" />
-            <StatDivider />
-            <StatCell value={waiting} label="waiting" accent="text-marine" />
+            <StatCell value={waiting} label="to go" accent="text-marine" />
           </div>
 
           {recentArtists.length > 0 ? (
@@ -152,7 +150,7 @@ function StatCell({ value, label, accent }: { value: number; label: string; acce
   return (
     <div className="flex flex-col items-center px-4 md:px-6">
       <span
-        className={`font-display text-4xl leading-none md:text-5xl ${accent ?? 'text-nib'}`}
+        className={`font-display text-4xl leading-none md:text-4xl ${accent ?? 'text-nib'}`}
         style={{ fontVariationSettings: '"opsz" 96, "SOFT" 100, "wght" 500' }}
       >
         {value.toString().padStart(2, '0')}
