@@ -20,6 +20,15 @@ export function DrawCanvas({
   const [history, setHistory] = useState<History>(createHistory());
   const [tool, setTool] = useState<ToolbarState>({ size: 'medium', color: '#000000', isEraser: false });
   const drawingRef = useRef<Stroke | null>(null);
+  const penDetectedRef = useRef(false);
+
+  function shouldAccept(e: React.PointerEvent<HTMLCanvasElement>) {
+    if (e.pointerType === 'pen') {
+      penDetectedRef.current = true;
+      return true;
+    }
+    return !penDetectedRef.current;
+  }
 
   useEffect(() => { onHistoryChange(history); }, [history, onHistoryChange]);
 
@@ -56,6 +65,7 @@ export function DrawCanvas({
   }
 
   function onPointerDown(e: React.PointerEvent<HTMLCanvasElement>) {
+    if (!shouldAccept(e)) return;
     (e.target as HTMLCanvasElement).setPointerCapture(e.pointerId);
     drawingRef.current = {
       id: newStrokeId(),
@@ -69,6 +79,7 @@ export function DrawCanvas({
 
   function onPointerMove(e: React.PointerEvent<HTMLCanvasElement>) {
     if (!drawingRef.current) return;
+    if (!shouldAccept(e)) return;
     drawingRef.current.points.push(normalizedPoint(e));
     paint(history);
   }

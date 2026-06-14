@@ -158,7 +158,10 @@ export function DrawFlow({ letter }: { letter: string }) {
   }
   if (phase === 'naming') return <NameModal letter={letter} onSubmit={handleNameSubmit} onCancel={handleCancel} />;
   return (
-    <main className="relative isolate min-h-screen overflow-hidden bg-paper-sheet">
+    <main
+      className="relative isolate min-h-screen select-none overflow-hidden bg-paper-sheet"
+      style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none' }}
+    >
       <div aria-hidden="true" className="grain pointer-events-none absolute inset-0" />
 
       {referenceOpen && (

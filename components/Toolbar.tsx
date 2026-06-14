@@ -1,6 +1,6 @@
 'use client';
 
-import { LuEraser, LuUndo, LuRedo, LuTrash } from 'react-icons/lu';
+import { LuPencil, LuEraser, LuUndo, LuRedo, LuTrash } from 'react-icons/lu';
 import type { PenSize, StrokeColor } from '@/lib/drawing/strokes';
 
 export type ToolbarState = {
@@ -35,7 +35,8 @@ export function Toolbar({
       <ColorSwatch hex="#000000" current={state.color} onClick={() => setState({ ...state, color: '#000000', isEraser: false })} />
       <ColorSwatch hex="#666666" current={state.color} onClick={() => setState({ ...state, color: '#666666', isEraser: false })} />
       <Divider />
-      <ToolButton onClick={() => setState({ ...state, isEraser: !state.isEraser })} active={state.isEraser} label="Eraser"><LuEraser /></ToolButton>
+      <ToolButton onClick={() => setState({ ...state, isEraser: false })} active={!state.isEraser} label="Pen"><LuPencil /></ToolButton>
+      <ToolButton onClick={() => setState({ ...state, isEraser: true })} active={state.isEraser} label="Eraser"><LuEraser /></ToolButton>
       <ToolButton onClick={onUndo} disabled={!canUndo} label="Undo"><LuUndo /></ToolButton>
       <ToolButton onClick={onRedo} disabled={!canRedo} label="Redo"><LuRedo /></ToolButton>
       <ToolButton onClick={onClear} label="Clear all"><LuTrash /></ToolButton>
