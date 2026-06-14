@@ -30,7 +30,7 @@ export function ReferenceModal({
   async function load() {
     setState({ kind: 'loading' });
     try {
-      const res = await fetch(`/api/reference?q=${encodeURIComponent(subject)}`);
+      const res = await fetch(`/api/reference?q=${encodeURIComponent(`cartoon ${subject}`)}`);
       if (!res.ok) {
         setState({ kind: 'error', message: "Couldn't reach the image library. Try again?" });
         return;
