@@ -3,13 +3,16 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { upload } from '@vercel/blob/client';
+import { LuImage } from 'react-icons/lu';
 import { DrawCanvas } from './DrawCanvas';
 import { NameModal } from './NameModal';
 import { PreviewModal } from './PreviewModal';
+import { ReferenceModal } from './ReferenceModal';
 import { startHeartbeat } from '@/lib/heartbeat';
 import { exportToBlob } from '@/lib/drawing/export';
 import { createHistory, type History, type Stroke } from '@/lib/drawing/strokes';
 import { computeAutoFit, applyTransform, isIdentityTransform } from '@/lib/drawing/autofit';
+import type { Photo } from '@/lib/reference';
 
 type Phase = 'acquiring' | 'unavailable' | 'naming' | 'drawing' | 'previewing' | 'submitting' | 'submitted' | 'lock_lost';
 
@@ -22,6 +25,8 @@ export function DrawFlow({ letter }: { letter: string }) {
   const [subject, setSubject] = useState('');
   const [history, setHistory] = useState<History>(createHistory());
   const [transformedStrokes, setTransformedStrokes] = useState<Stroke[] | null>(null);
+  const [referenceOpen, setReferenceOpen] = useState(false);
+  const [referencePhotos, setReferencePhotos] = useState<Photo[] | null>(null);
   const stopHbRef = useRef<(() => void) | null>(null);
   const acquiredFor = useRef<string | null>(null);
 
@@ -190,6 +195,15 @@ export function DrawFlow({ letter }: { letter: string }) {
         />
       )}
 
+      {referenceOpen && (
+        <ReferenceModal
+          subject={subject}
+          cachedPhotos={referencePhotos}
+          onCache={setReferencePhotos}
+          onClose={() => setReferenceOpen(false)}
+        />
+      )}
+
       <div className="relative mx-auto max-w-5xl px-4 pb-12 pt-6 md:px-8 md:pt-10">
         <header className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between md:mb-6">
           <div className="min-w-0">
@@ -221,6 +235,16 @@ export function DrawFlow({ letter }: { letter: string }) {
               className="rounded-[3px] px-4 py-2 font-display text-[11px] uppercase tracking-eyebrow text-nibsoft transition-colors hover:text-nib"
             >
               Cancel
+            </button>
+            <button
+              type="button"
+              onClick={() => setReferenceOpen(true)}
+              disabled={phase === 'submitting' || phase === 'previewing' || phase === 'lock_lost'}
+              className="flex items-center gap-1.5 rounded-[3px] px-4 py-2 font-display text-[11px] uppercase tracking-eyebrow text-nibsoft transition-colors hover:text-nib disabled:opacity-40"
+              aria-label="See a reference image"
+            >
+              <LuImage className="text-sm" />
+              Reference
             </button>
             <button
               onClick={handleSubmit}
