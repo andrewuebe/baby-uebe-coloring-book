@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { LuCheck } from 'react-icons/lu';
 
 export type LetterState =
   | { letter: string; status: 'available' }
@@ -39,18 +40,19 @@ export function AlphabetCell({
         className="group relative aspect-[3/4] animate-page-in overflow-hidden rounded-[6px] bg-paper-deep text-left ink-shadow transition-transform duration-300 will-change-transform hover:-translate-y-1 hover:[transform:rotate(calc(var(--tilt)*0.4))_translateY(-4px)]"
         aria-label={`${state.letter} is for ${state.subject}, drawn by ${state.artistName}. View.`}
       >
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(251,244,228,0) 30%, rgba(251,244,228,0.55) 55%, rgba(251,244,228,0.98) 75%, rgba(251,244,228,1) 100%)',
+          }}
+        />
         <img
           src={state.thumbnailUrl}
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover opacity-90 mix-blend-multiply"
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(180deg, rgba(251,244,228,0.0) 35%, rgba(251,244,228,0.62) 70%, rgba(251,244,228,0.92) 100%)',
-          }}
+          className="pointer-events-none absolute left-[17.5%] right-[17.5%] top-4 h-[65%] object-cover opacity-90 mix-blend-multiply"
         />
         <span
           aria-hidden="true"
@@ -59,14 +61,15 @@ export function AlphabetCell({
         >
           {state.letter}
         </span>
-        <span
+        <LuCheck
           aria-hidden="true"
-          className="absolute right-2 top-2 h-2 w-2 rounded-full"
-          style={{ background: accent, boxShadow: `0 0 0 3px ${accent}22` }}
+          className="absolute right-2 top-2 h-4 w-4"
+          style={{ color: accent }}
+          strokeWidth={3}
         />
-        <div className="absolute bottom-0 left-0 right-0 px-3 pb-2.5 pt-1.5">
-          <div className="font-hand text-[15px] leading-tight text-nib">{state.subject}</div>
-          <div className="mt-0.5 font-hand text-[12px] leading-tight text-nibsoft">— {state.artistName}</div>
+        <div className="absolute bottom-0 left-0 right-0 bg-paper px-3 pb-2.5 pt-1">
+          <div className="font-hand text-[19px] leading-[1.05] text-nib">{state.subject}</div>
+          <div className="font-hand text-[15px] leading-[1.05] text-nibsoft">— {state.artistName}</div>
         </div>
       </button>
     );
@@ -89,10 +92,10 @@ export function AlphabetCell({
         </span>
         <div className="absolute inset-0 grid place-items-center">
           <div
-            className="animate-pulse-stamp rounded-sm border-2 border-coral/80 px-2 py-1 font-display text-[10px] uppercase tracking-eyebrow text-coral"
+            className="rounded-sm border-2 border-coral/80 px-2 py-1 font-display text-[10px] uppercase text-coral -rotate-12"
             style={{ fontVariationSettings: '"wght" 700' }}
           >
-            In progress
+            Drawing In progress
           </div>
         </div>
         {state.artistName ? (
