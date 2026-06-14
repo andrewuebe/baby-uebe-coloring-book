@@ -1,6 +1,6 @@
 # Auto-fit & Reference Image Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking. Mark the Tasks, and Steps within Tasks as complete as you finish them.
 
 **Goal:** Add two helpers to the existing drawing flow: (1) an auto-fit preview that centers and scales the artist's drawing on submit, and (2) a "Reference image" button that opens a Pexels-powered photo modal so casual artists can glance at what they're trying to draw.
 
@@ -42,7 +42,7 @@
 - Create: `lib/drawing/autofit.ts`
 - Test: `tests/lib/drawing/autofit.test.ts`
 
-- [ ] **Step 1: Write the failing test file**
+- [x] **Step 1: Write the failing test file**
 
 Create `tests/lib/drawing/autofit.test.ts`:
 
@@ -176,13 +176,13 @@ describe('computeAutoFit', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test file to confirm it fails**
+- [x] **Step 2: Run the test file to confirm it fails**
 
 Run: `npx vitest run tests/lib/drawing/autofit.test.ts`
 
 Expected output: the suite errors with something like `Failed to resolve import "@/lib/drawing/autofit"` because the source file doesn't exist yet.
 
-- [ ] **Step 3: Create the autofit source file**
+- [x] **Step 3: Create the autofit source file**
 
 Create `lib/drawing/autofit.ts`:
 
@@ -269,13 +269,13 @@ export function computeAutoFit(strokes: Stroke[]): AutoFitTransform {
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `npx vitest run tests/lib/drawing/autofit.test.ts`
 
 Expected: all 9 tests pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add lib/drawing/autofit.ts tests/lib/drawing/autofit.test.ts
@@ -290,7 +290,7 @@ git commit -m "feat: add computeAutoFit transform calculation"
 - Modify: `lib/drawing/autofit.ts`
 - Modify: `tests/lib/drawing/autofit.test.ts`
 
-- [ ] **Step 1: Add the failing test**
+- [x] **Step 1: Add the failing test**
 
 Append inside the existing `describe('computeAutoFit', …)` block's closing brace area, then add a second describe block at the end of the file:
 
@@ -343,13 +343,13 @@ describe('applyTransform', () => {
 
 (Combine the `import { computeAutoFit } from '@/lib/drawing/autofit';` and the new `import { applyTransform } from …` into one import at the top of the file.)
 
-- [ ] **Step 2: Run the new tests to verify they fail**
+- [x] **Step 2: Run the new tests to verify they fail**
 
 Run: `npx vitest run tests/lib/drawing/autofit.test.ts -t applyTransform`
 
 Expected: the `applyTransform` tests fail — `applyTransform is not a function` or import error.
 
-- [ ] **Step 3: Implement `applyTransform`**
+- [x] **Step 3: Implement `applyTransform`**
 
 Append to `lib/drawing/autofit.ts`:
 
@@ -366,13 +366,13 @@ export function applyTransform(strokes: Stroke[], t: AutoFitTransform): Stroke[]
 }
 ```
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [x] **Step 4: Run the tests to verify they pass**
 
 Run: `npx vitest run tests/lib/drawing/autofit.test.ts`
 
 Expected: all tests pass (computeAutoFit + applyTransform).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add lib/drawing/autofit.ts tests/lib/drawing/autofit.test.ts
@@ -387,7 +387,7 @@ git commit -m "feat: add applyTransform for autofit"
 - Modify: `lib/drawing/autofit.ts`
 - Modify: `tests/lib/drawing/autofit.test.ts`
 
-- [ ] **Step 1: Add the failing test**
+- [x] **Step 1: Add the failing test**
 
 Append to `tests/lib/drawing/autofit.test.ts`:
 
@@ -418,13 +418,13 @@ describe('isIdentityTransform', () => {
 
 (Merge into the existing autofit import line at the top.)
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `npx vitest run tests/lib/drawing/autofit.test.ts -t isIdentityTransform`
 
 Expected: fails with `isIdentityTransform is not a function`.
 
-- [ ] **Step 3: Implement `isIdentityTransform`**
+- [x] **Step 3: Implement `isIdentityTransform`**
 
 Append to `lib/drawing/autofit.ts`:
 
@@ -441,13 +441,13 @@ export function isIdentityTransform(t: AutoFitTransform): boolean {
 }
 ```
 
-- [ ] **Step 4: Run all autofit tests to verify they pass**
+- [x] **Step 4: Run all autofit tests to verify they pass**
 
 Run: `npx vitest run tests/lib/drawing/autofit.test.ts`
 
 Expected: every test in the file passes.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add lib/drawing/autofit.ts tests/lib/drawing/autofit.test.ts
@@ -463,7 +463,7 @@ git commit -m "feat: add isIdentityTransform helper"
 
 This is a presentation component. We're not unit-testing it directly (consistent with the existing pattern in `components/`); the manual E2E checklist covers its behavior.
 
-- [ ] **Step 1: Create the component file**
+- [x] **Step 1: Create the component file**
 
 Create `components/PreviewModal.tsx`:
 
@@ -595,13 +595,13 @@ export function PreviewModal({
 }
 ```
 
-- [ ] **Step 2: Type-check to confirm the file compiles**
+- [x] **Step 2: Type-check to confirm the file compiles**
 
 Run: `npx tsc --noEmit`
 
 Expected: no errors (or only pre-existing errors unrelated to the new file).
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add components/PreviewModal.tsx
@@ -615,7 +615,7 @@ git commit -m "feat: add PreviewModal for autofit confirmation"
 **Files:**
 - Modify: `components/DrawFlow.tsx`
 
-- [ ] **Step 1: Add the `'previewing'` phase and submit-stage state**
+- [x] **Step 1: Add the `'previewing'` phase and submit-stage state**
 
 Open `components/DrawFlow.tsx`. Change the `Phase` type (currently line 12):
 
@@ -642,7 +642,7 @@ Add the missing `Stroke` import to the strokes import line at the top of the fil
 import { createHistory, type History, type Stroke } from '@/lib/drawing/strokes';
 ```
 
-- [ ] **Step 2: Replace `handleSubmit` with a two-stage flow**
+- [x] **Step 2: Replace `handleSubmit` with a two-stage flow**
 
 Find the existing `async function handleSubmit()` (lines ~70–105) and replace it with:
 
@@ -696,7 +696,7 @@ function handleSubmit() {
 }
 ```
 
-- [ ] **Step 3: Render `PreviewModal` when in the previewing phase**
+- [x] **Step 3: Render `PreviewModal` when in the previewing phase**
 
 Find the JSX `return` for the drawing phase (the `<main>` block starting around line 153). Just inside that `<main>` (after the existing `<div aria-hidden …grain… />`), add:
 
@@ -724,7 +724,7 @@ Find the JSX `return` for the drawing phase (the `<main>` block starting around 
 )}
 ```
 
-- [ ] **Step 4: Make the Submit button reflect the new phase**
+- [x] **Step 4: Make the Submit button reflect the new phase**
 
 The existing Submit button text reads `phase === 'submitting' ? 'Saving…' : 'Submit page'`. Update its `disabled` clause so the button doesn't stay clickable while the preview modal is open:
 
@@ -732,19 +732,19 @@ The existing Submit button text reads `phase === 'submitting' ? 'Saving…' : 'S
 disabled={history.strokes.length === 0 || phase === 'submitting' || phase === 'previewing'}
 ```
 
-- [ ] **Step 5: Type-check + run autofit tests**
+- [x] **Step 5: Type-check + run autofit tests**
 
 Run: `npx tsc --noEmit && npx vitest run tests/lib/drawing/autofit.test.ts`
 
 Expected: no TypeScript errors; all autofit tests still pass.
 
-- [ ] **Step 6: Smoke-test manually**
+- [x] **Step 6: Smoke-test manually** *(deferred — manual browser smoke test skipped; cannot drive a browser in this session)*
 
 Run: `npm run dev`
 
 In a browser, log in with the passcode, pick any available letter, fill in the name modal, draw a small doodle in one corner, click **Submit page**. The PreviewModal should appear with two side-by-side thumbnails. Try **Use my original** (drawing saves as-drawn), then redo with another letter and try **Use this** (drawing saves centered/scaled). Try drawing something already well-centered at a reasonable size — preview should be skipped.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add components/DrawFlow.tsx
@@ -760,7 +760,7 @@ git commit -m "feat: wire autofit preview into draw flow"
 - Create: `app/api/reference/route.ts`
 - Test: `tests/api/reference.test.ts`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/api/reference.test.ts`:
 
@@ -877,13 +877,13 @@ describe('GET /api/reference', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `npx vitest run tests/api/reference.test.ts`
 
 Expected: fails with `Failed to resolve import "@/app/api/reference/route"`.
 
-- [ ] **Step 3: Create the `Photo` type and Pexels mapper**
+- [x] **Step 3: Create the `Photo` type and Pexels mapper**
 
 Create `lib/reference.ts`:
 
@@ -920,7 +920,7 @@ export function mapPexelsPhotos(raw: unknown): Photo[] {
 }
 ```
 
-- [ ] **Step 4: Create the route handler**
+- [x] **Step 4: Create the route handler**
 
 Create `app/api/reference/route.ts`:
 
@@ -971,13 +971,13 @@ export async function GET(req: Request) {
 }
 ```
 
-- [ ] **Step 5: Run the test to verify it passes**
+- [x] **Step 5: Run the test to verify it passes**
 
 Run: `npx vitest run tests/api/reference.test.ts`
 
 Expected: all 8 tests pass.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add lib/reference.ts app/api/reference/route.ts tests/api/reference.test.ts
@@ -991,7 +991,7 @@ git commit -m "feat: add /api/reference Pexels proxy"
 **Files:**
 - Create: `components/ReferenceModal.tsx`
 
-- [ ] **Step 1: Create the component file**
+- [x] **Step 1: Create the component file**
 
 Create `components/ReferenceModal.tsx`:
 
@@ -1135,13 +1135,13 @@ export function ReferenceModal({
 }
 ```
 
-- [ ] **Step 2: Type-check**
+- [x] **Step 2: Type-check**
 
 Run: `npx tsc --noEmit`
 
 Expected: no errors.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add components/ReferenceModal.tsx
@@ -1155,7 +1155,7 @@ git commit -m "feat: add ReferenceModal for image lookups"
 **Files:**
 - Modify: `components/DrawFlow.tsx`
 
-- [ ] **Step 1: Add imports and state for the reference modal**
+- [x] **Step 1: Add imports and state for the reference modal**
 
 Open `components/DrawFlow.tsx`. Add to the imports at the top:
 
@@ -1172,7 +1172,7 @@ const [referenceOpen, setReferenceOpen] = useState(false);
 const [referencePhotos, setReferencePhotos] = useState<Photo[] | null>(null);
 ```
 
-- [ ] **Step 2: Add the Reference button to the header**
+- [x] **Step 2: Add the Reference button to the header**
 
 Find the existing header `<div className="flex shrink-0 items-center gap-1 self-end sm:self-auto">` (the Cancel + Submit cluster). Insert a new button between Cancel and Submit:
 
@@ -1191,7 +1191,7 @@ Find the existing header `<div className="flex shrink-0 items-center gap-1 self-
 
 (Place this between the `Cancel` button and the `Submit page` button in the same flex row.)
 
-- [ ] **Step 3: Render the ReferenceModal**
+- [x] **Step 3: Render the ReferenceModal**
 
 Inside the `<main>` for the drawing layout, right next to where you rendered `PreviewModal` in Task 5, add:
 
@@ -1206,17 +1206,17 @@ Inside the `<main>` for the drawing layout, right next to where you rendered `Pr
 )}
 ```
 
-- [ ] **Step 4: Type-check + run the full test suite**
+- [x] **Step 4: Type-check + run the full test suite**
 
 Run: `npx tsc --noEmit && npm test`
 
 Expected: no TypeScript errors; existing tests still pass; new autofit + reference tests pass. If a DB-dependent test suite reports "skipped" because Docker isn't running locally, that's fine — those are pre-existing.
 
-- [ ] **Step 5: Manual smoke test**
+- [ ] **Step 5: Manual smoke test** _(deferred — no browser-driving in this implementation session)_
 
 Add `PEXELS_API_KEY=<your-key>` to `.env.local` (sign up at https://www.pexels.com/api/ for a free key — instant), then `npm run dev`. Walk through the drawing flow for a letter; click **Reference**; verify the photo loads with the subject as the query, click **Show me another** to advance, close and reopen the modal (should not re-fetch), then submit and verify the rest of the flow still works.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add components/DrawFlow.tsx
@@ -1231,7 +1231,7 @@ git commit -m "feat: add reference image button to draw header"
 - Modify: `docs/superpowers/specs/2026-06-11-baby-shower-coloring-book-design.md` (env var list)
 - Modify: `README.md` (or whichever file holds the pre-party checklist — currently the original spec doc)
 
-- [ ] **Step 1: Add `PEXELS_API_KEY` to the env-vars list in the original spec**
+- [x] **Step 1: Add `PEXELS_API_KEY` to the env-vars list in the original spec**
 
 In `docs/superpowers/specs/2026-06-11-baby-shower-coloring-book-design.md`, find the **Deployment → Env vars** block (around line 175):
 
@@ -1254,7 +1254,7 @@ Add one line:
   - `PEXELS_API_KEY`
 ```
 
-- [ ] **Step 2: Append the new manual checklist items**
+- [x] **Step 2: Append the new manual checklist items**
 
 In the same file, find the **Manual E2E checklist** section (around line 157) and append:
 
@@ -1272,7 +1272,7 @@ In the same file, find the **Manual E2E checklist** section (around line 157) an
 - [ ] Reference button is disabled while preview modal is open and while submitting.
 ```
 
-- [ ] **Step 3: Add `PEXELS_API_KEY` to the pre-party checklist**
+- [x] **Step 3: Add `PEXELS_API_KEY` to the pre-party checklist**
 
 In the same file's **Pre-party checklist** section (around line 183), add a line:
 
@@ -1280,19 +1280,19 @@ In the same file's **Pre-party checklist** section (around line 183), add a line
 - `PEXELS_API_KEY` configured in Vercel for the production environment.
 ```
 
-- [ ] **Step 4: Verify the env var is set locally**
+- [x] **Step 4: Verify the env var is set locally** *(local `.env.local` missing the key — informational only; production must set it in Vercel)*
 
 Run: `grep -c '^PEXELS_API_KEY=' .env.local || echo "missing"`
 
 Expected: prints `1` (key present). If `missing`, add it before testing.
 
-- [ ] **Step 5: Run the full test suite one more time**
+- [x] **Step 5: Run the full test suite one more time**
 
 Run: `npm test`
 
 Expected: all unit + non-DB integration tests pass. (DB-dependent tests may be skipped without Docker — that's fine, same as before this work.)
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add docs/superpowers/specs/2026-06-11-baby-shower-coloring-book-design.md
