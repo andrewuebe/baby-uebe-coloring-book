@@ -6,15 +6,14 @@ import { upload } from '@vercel/blob/client';
 import { LuImage } from 'react-icons/lu';
 import { DrawCanvas } from './DrawCanvas';
 import { NameModal } from './NameModal';
-import { PreviewModal } from './PreviewModal';
 import { ReferenceModal } from './ReferenceModal';
 import { startHeartbeat } from '@/lib/heartbeat';
 import { exportToBlob } from '@/lib/drawing/export';
-import { createHistory, type History, type Stroke } from '@/lib/drawing/strokes';
-import { computeAutoFit, applyTransform, isIdentityTransform } from '@/lib/drawing/autofit';
+import { createHistory, type History } from '@/lib/drawing/strokes';
+import { computeAutoFit, applyTransform } from '@/lib/drawing/autofit';
 import type { Photo } from '@/lib/reference';
 
-type Phase = 'acquiring' | 'unavailable' | 'naming' | 'drawing' | 'previewing' | 'submitting' | 'submitted' | 'lock_lost';
+type Phase = 'acquiring' | 'unavailable' | 'naming' | 'drawing' | 'submitting' | 'submitted' | 'lock_lost';
 
 export function DrawFlow({ letter }: { letter: string }) {
   const router = useRouter();
@@ -24,7 +23,6 @@ export function DrawFlow({ letter }: { letter: string }) {
   const [artist, setArtist] = useState('');
   const [subject, setSubject] = useState('');
   const [history, setHistory] = useState<History>(createHistory());
-  const [transformedStrokes, setTransformedStrokes] = useState<Stroke[] | null>(null);
   const [referenceOpen, setReferenceOpen] = useState(false);
   const [referencePhotos, setReferencePhotos] = useState<Photo[] | null>(null);
   const stopHbRef = useRef<(() => void) | null>(null);
@@ -55,7 +53,7 @@ export function DrawFlow({ letter }: { letter: string }) {
   }, [letter, acquire]);
 
   useEffect(() => {
-    if ((phase !== 'drawing' && phase !== 'previewing') || !lockToken) return;
+    if (phase !== 'drawing' || !lockToken) return;
     const handle = startHeartbeat(letter, lockToken, (e) => {
       if (e === 'lost') setPhase('lock_lost');
     });
@@ -75,11 +73,12 @@ export function DrawFlow({ letter }: { letter: string }) {
     setPhase('drawing');
   }
 
-  async function doSubmit(strokesToSubmit: Stroke[]) {
+  async function handleSubmit() {
     if (!lockToken) return;
+    const transformed = applyTransform(history.strokes, computeAutoFit(history.strokes));
     setPhase('submitting');
     try {
-      const blob = await exportToBlob(strokesToSubmit, { letter, subject });
+      const blob = await exportToBlob(transformed, { letter, subject });
       const uploaded = await upload(`${letter}-${Date.now()}.png`, blob, {
         access: 'public',
         handleUploadUrl: '/api/blob-upload',
@@ -93,7 +92,7 @@ export function DrawFlow({ letter }: { letter: string }) {
           artist_name: artist,
           subject,
           image_url: uploaded.url,
-          stroke_data: strokesToSubmit,
+          stroke_data: transformed,
         }),
       });
       if (res.status === 201) {
@@ -110,17 +109,6 @@ export function DrawFlow({ letter }: { letter: string }) {
       setErrorReason('network');
       setPhase('drawing');
     }
-  }
-
-  function handleSubmit() {
-    if (!lockToken) return;
-    const transform = computeAutoFit(history.strokes);
-    if (isIdentityTransform(transform)) {
-      void doSubmit(history.strokes);
-      return;
-    }
-    setTransformedStrokes(applyTransform(history.strokes, transform));
-    setPhase('previewing');
   }
 
   async function handleCancel() {
@@ -173,28 +161,6 @@ export function DrawFlow({ letter }: { letter: string }) {
     <main className="relative isolate min-h-screen overflow-hidden bg-paper-sheet">
       <div aria-hidden="true" className="grain pointer-events-none absolute inset-0" />
 
-      {phase === 'previewing' && transformedStrokes && (
-        <PreviewModal
-          originalStrokes={history.strokes}
-          transformedStrokes={transformedStrokes}
-          caption={{ letter, subject }}
-          busy={false}
-          onBack={() => {
-            setTransformedStrokes(null);
-            setPhase('drawing');
-          }}
-          onUseOriginal={() => {
-            const s = history.strokes;
-            setTransformedStrokes(null);
-            void doSubmit(s);
-          }}
-          onUseCleaned={() => {
-            const s = transformedStrokes;
-            void doSubmit(s);
-          }}
-        />
-      )}
-
       {referenceOpen && (
         <ReferenceModal
           subject={subject}
@@ -239,7 +205,7 @@ export function DrawFlow({ letter }: { letter: string }) {
             <button
               type="button"
               onClick={() => setReferenceOpen(true)}
-              disabled={phase === 'submitting' || phase === 'previewing' || phase === 'lock_lost'}
+              disabled={phase === 'submitting' || phase === 'lock_lost'}
               className="flex items-center gap-1.5 rounded-[3px] px-4 py-2 font-display text-[11px] uppercase tracking-eyebrow text-nibsoft transition-colors hover:text-nib disabled:opacity-40"
               aria-label="See a reference image"
             >
@@ -248,7 +214,7 @@ export function DrawFlow({ letter }: { letter: string }) {
             </button>
             <button
               onClick={handleSubmit}
-              disabled={history.strokes.length === 0 || phase === 'submitting' || phase === 'previewing'}
+              disabled={history.strokes.length === 0 || phase === 'submitting'}
               className="rounded-[3px] bg-ink px-5 py-2.5 font-display text-[11px] uppercase tracking-eyebrow text-cream transition-opacity hover:bg-nib disabled:opacity-40"
             >
               {phase === 'submitting' ? 'Saving…' : 'Submit page'}

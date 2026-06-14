@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { computeAutoFit, applyTransform, isIdentityTransform } from '@/lib/drawing/autofit';
+import { computeAutoFit, applyTransform } from '@/lib/drawing/autofit';
 import type { Stroke } from '@/lib/drawing/strokes';
 
 const mkStroke = (
@@ -166,26 +166,5 @@ describe('applyTransform', () => {
     expect(out).not.toBe(input);
     expect(out[0]).not.toBe(s);
     expect(s.points[0]).toEqual({ x: 0, y: 0, pressure: 0.5 });
-  });
-});
-
-describe('isIdentityTransform', () => {
-  it('returns true for exact identity', () => {
-    expect(isIdentityTransform({ scale: 1, dx: 0, dy: 0 })).toBe(true);
-  });
-
-  it('returns true within tolerance (|scale-1|<0.05, |dx|<0.02, |dy|<0.02)', () => {
-    expect(isIdentityTransform({ scale: 1.04, dx: 0.019, dy: -0.019 })).toBe(true);
-    expect(isIdentityTransform({ scale: 0.96, dx: 0.0, dy: 0.01 })).toBe(true);
-  });
-
-  it('returns false when scale is far from 1', () => {
-    expect(isIdentityTransform({ scale: 1.06, dx: 0, dy: 0 })).toBe(false);
-    expect(isIdentityTransform({ scale: 0.94, dx: 0, dy: 0 })).toBe(false);
-  });
-
-  it('returns false when translation is large', () => {
-    expect(isIdentityTransform({ scale: 1, dx: 0.03, dy: 0 })).toBe(false);
-    expect(isIdentityTransform({ scale: 1, dx: 0, dy: -0.03 })).toBe(false);
   });
 });

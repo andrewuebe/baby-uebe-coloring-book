@@ -111,7 +111,7 @@ export function AlphabetCell({
     <Link
       href={`/draw/${state.letter}`}
       style={style}
-      className="group relative aspect-[3/4] animate-page-in overflow-hidden rounded-[6px] bg-paper ink-shadow transition-transform duration-300 will-change-transform hover:-translate-y-1 hover:[transform:rotate(calc(var(--tilt)*0.2))_translateY(-4px)]"
+      className="group relative aspect-[3/4] animate-page-in overflow-hidden rounded-[6px] bg-paper-white ink-shadow transition-transform duration-300 will-change-transform hover:-translate-y-1 hover:[transform:rotate(calc(var(--tilt)*0.2))_translateY(-4px)]"
       aria-label={`Draw the letter ${state.letter}`}
     >
       <div className="absolute inset-0 grain grain-soft" aria-hidden="true" />
@@ -136,7 +136,7 @@ export function AlphabetCell({
         style={{ background: accent }}
       />
       <div className="absolute bottom-2 left-0 right-0 text-center font-hand text-[12px] text-nibsoft opacity-80 transition-opacity duration-300 group-hover:opacity-100">
-        your page →
+        tap to draw →
       </div>
     </Link>
   );

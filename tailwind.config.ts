@@ -8,6 +8,8 @@ export default {
         ink: '#2a2a2a',
         inksoft: '#666666',
         paper: '#FBF4E4',
+        'paper-light': '#FFF9E8',
+        'paper-white': '#FDFCF6',
         'paper-deep': '#F3E6CC',
         'paper-edge': '#E5D2A8',
         'paper-shadow': '#C9B486',
